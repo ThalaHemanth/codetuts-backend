@@ -17,9 +17,9 @@ const Mutation = {
     return 'Logged In';
   },
   CreateApi: async (parent, args, { db }) => {
-    const title = args.title.toLower();
-    const Language = args.Language.toLower();
-    const playlistId = args;
+    const title = args.title.toLowerCase();
+    const Language = args.Language.toLowerCase();
+    const { playlistId } = args;
     const id = uuid();
     const { data } = await axios.get(
       `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&key=AIzaSyCxqkIJes14pl7_8hSkgq_cApTDRgK12OI&maxResults=50`
@@ -30,7 +30,7 @@ const Mutation = {
       title: item.snippet.title,
       video: item.snippet.resourceId.videoId,
     }));
-    db.collection(this.Language).add({
+    db.collection(Language).add({
       id,
       title,
       playlistId,
