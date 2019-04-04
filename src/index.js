@@ -15,11 +15,21 @@ const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
   resolvers: {
     Mutation,
-    Query
+    Query,
   },
   context: {
     firebase,
-    db
-  }
+    db,
+  },
 });
-server.start(() => console.log('Server is running on localhost:4000'));
+server.start(() => {
+  // firebase.auth().onAuthStateChanged(user => {
+  //   if (user) {
+  //     console.log('USER LOGGED IN', user);
+  //     user.updateProfile({
+  //       displayName: 'Sharwanand',
+  //     });
+  //   }
+  // });
+  console.log('Server is running on localhost:4000');
+});

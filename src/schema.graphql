@@ -2,6 +2,22 @@ type Query {
   hello: String
 }
 
+type Item {
+  channel: String!
+  thumbnail: String!
+  title: String!
+  video: String!
+}
+
+type ApiModel {
+  id: ID!
+  title: String!
+  language: String!
+  playlist: [Item]!
+}
+
 type Mutation {
-  Ahello: String
+  Signup(email: String!, password: String!): String
+  Signin(email: String!, password: String!): String
+  CreateApi(title: String!, playlistId: String!, Language: String!): ApiModel
 }
