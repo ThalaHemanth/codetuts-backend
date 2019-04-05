@@ -1,5 +1,5 @@
 import { GraphQLServer } from 'graphql-yoga';
-
+import 'babel-polyfill';
 import Mutation from './resolvers/Mutation';
 import Query from './resolvers/Query';
 import firebase from './db';
