@@ -1,4 +1,11 @@
 {
   "version": 2,
-  "builds": [{ "src": "build/index.js", "use": "@now/node-server" }]
+  "builds": [
+    {
+      "src": "**/*.js",
+      "use": "@now/node",
+      "config": { "maxLambdaSize": "50mb" }
+    }
+  ],
+  "routes": [{ "src": "/(.*)", "dest": "/build/index.js" }]
 }

@@ -1,14 +1,19 @@
 const Query = {
-  hello: (parent, args, { db }) => {
-    console.clear();
+  getCourses: async (parent, args, { db }) => {
     const results = [];
-    db.collection('Javascript')
-      .get()
-      .then(snapshot =>
-        snapshot.forEach(doc => results.push(doc.data().playlist))
-      );
-    console.log('Get Courses', results);
-    return 'Hello Worrld';
+    try {
+      await db
+        .collection('javascript')
+        .get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            results.push({ ...doc.data() });
+          });
+        });
+      return 'success';
+    } catch (error) {
+      throw new Error('Error', error);
+    }
   },
 };
 export { Query as default };

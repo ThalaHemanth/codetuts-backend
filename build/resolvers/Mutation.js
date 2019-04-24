@@ -370,9 +370,11 @@ var Mutation = {
                 id: id,
                 title: title,
                 language: Language,
-                playlist: Items.forEach(function (item) {
-                  return item;
-                })
+                playlist: function playlist() {
+                  return Items.map(function (item) {
+                    return { item: item };
+                  });
+                }
               });
 
             case 11:
