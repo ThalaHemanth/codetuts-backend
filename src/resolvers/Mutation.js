@@ -24,7 +24,7 @@ const Mutation = {
     const Language = args.Language.toLowerCase();
     const { playlistId } = args;
     const id = uuid();
-    const duration = '';
+    let duration = '';
     const { data } = await axios.get(
       `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&key=AIzaSyCxqkIJes14pl7_8hSkgq_cApTDRgK12OI&maxResults=50`
     );
