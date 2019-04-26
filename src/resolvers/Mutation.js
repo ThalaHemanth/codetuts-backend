@@ -1,5 +1,5 @@
 /* eslint-disable prefer-destructuring */
-/* eslint-disable no-const-assign */
+/* eslint-disable no-shadow */
 import uuid from 'uuid/v4';
 import axios from 'axios';
 import moment from 'moment';
@@ -24,48 +24,59 @@ const Mutation = {
     const Language = args.Language.toLowerCase();
     const { playlistId } = args;
     const id = uuid();
-    let duration = '';
+    let Items = [];
     const { data } = await axios.get(
       `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&key=AIzaSyCxqkIJes14pl7_8hSkgq_cApTDRgK12OI&maxResults=50`
     );
-    const Items = data.items.map(async item => {
-      const { videoId } = item.snippet.resourceId;
-      const res = await axios.get(
-        `https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${videoId}&key=AIzaSyCxqkIJes14pl7_8hSkgq_cAp2+TDRgK12OI`
-      );
-      const videos = res.data.items.map(item2 => {
-        duration = item2.contentDetails.duration;
-        duration = Math.round(moment.duration(duration).asMinutes());
+    Items = data.items.map(item => ({
+      channel: item.snippet.channelTitle,
+      thumbnail: item.snippet.thumbnails.default.url,
+      title: item.snippet.title,
+      video: item.snippet.resourceId.videoId,
+    }));
+    const urls = Items.map(
+      item =>
+        `https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${
+          item.video
+        }&key=AIzaSyCxqkIJes14pl7_8hSkgq_cApTDRgK12OI`
+    );
+    const promises = urls.map(url => axios.get(url));
+    const res = await Promise.all(promises);
+    const videoDetails = await res.map(response => ({
+      id: response.data.items[0].id,
+      duration: response.data.items[0].contentDetails.duration,
+    }));
+    const newItems = Items.map(item => {
+      const tempItems = [];
+      videoDetails.forEach(video => {
+        if (video.id === item.video) {
+          const duration = Math.round(
+            moment.duration(video.duration).asMinutes()
+          );
+          tempItems.push({
+            ...item,
+            duration,
+          });
+        }
       });
-
-      return {
-        channel: item.snippet.channelTitle,
-        thumbnail: item.snippet.thumbnails.default.url,
-        title: item.snippet.title,
-        video: item.snippet.resourceId.videoId,
-        duration,
-      };
+      return { ...tempItems };
     });
+    console.log(newItems[0]);
+
     db.collection(Language).add({
       id,
       title,
       playlistId,
-      playlist: Items,
+      playlist: newItems,
     });
+
     return {
       id,
       title,
       language: Language,
-      playlist: () => Items.map(item => ({ item })),
+      playlist: newItems,
     };
   },
 };
 
 export { Mutation as default };
-
-/*
- id:
- titile:
- playlistId:
- playlist:
-*/

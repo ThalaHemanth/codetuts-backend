@@ -1,4 +1,6 @@
 {
   "presets": ["env"],
-  "plugins": [["transform-object-rest-spread"], ["fast-async"]]
+  "plugins": [["transform-object-rest-spread"], ["fast-async"]],
+  "sourceMaps": "inline",
+  "retainLines": true
 }
