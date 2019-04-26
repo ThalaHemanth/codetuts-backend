@@ -1,5 +1,5 @@
 type Query {
-  getCourses: String
+  getCourses(language: String!): String!
 }
 
 type Item {

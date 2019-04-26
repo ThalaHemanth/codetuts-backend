@@ -47,22 +47,18 @@ const Mutation = {
       duration: response.data.items[0].contentDetails.duration,
     }));
     const newItems = Items.map(item => {
-      const tempItems = [];
+      let tempItems;
       videoDetails.forEach(video => {
         if (video.id === item.video) {
           const duration = Math.round(
             moment.duration(video.duration).asMinutes()
           );
-          tempItems.push({
-            ...item,
-            duration,
-          });
+          tempItems = { ...item, duration };
         }
       });
       return { ...tempItems };
     });
-    console.log(newItems[0]);
-
+    console.log(newItems);
     db.collection(Language).add({
       id,
       title,
