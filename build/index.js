@@ -1,22 +1,8 @@
-'use strict';
-
-var _graphqlYoga = require('graphql-yoga');
-
+'use strict';var _graphqlYoga = require('graphql-yoga');
 require('babel-polyfill');
-
-var _Mutation = require('./resolvers/Mutation');
-
-var _Mutation2 = _interopRequireDefault(_Mutation);
-
-var _Query = require('./resolvers/Query');
-
-var _Query2 = _interopRequireDefault(_Query);
-
-var _db = require('./db');
-
-var _db2 = _interopRequireDefault(_db);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _Mutation = require('./resolvers/Mutation');var _Mutation2 = _interopRequireDefault(_Mutation);
+var _Query = require('./resolvers/Query');var _Query2 = _interopRequireDefault(_Query);
+var _db = require('./db');var _db2 = _interopRequireDefault(_db);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 var db = _db2.default.firestore();
 
@@ -29,13 +15,13 @@ var server = new _graphqlYoga.GraphQLServer({
   typeDefs: './src/schema.graphql',
   resolvers: {
     Mutation: _Mutation2.default,
-    Query: _Query2.default
-  },
+    Query: _Query2.default },
+
   context: {
     firebase: _db2.default,
-    db: db
-  }
-});
+    db: db } });
+
+
 server.start(function () {
   // firebase.auth().onAuthStateChanged(user => {
   //   if (user) {
