@@ -47,22 +47,18 @@ var Mutation = {
                     duration: response.data.items[0].contentDetails.duration };}));case 17:videoDetails = _context.sent;
 
               newItems = Items.map(function (item) {
-                var tempItems = [];
+                var tempItems = void 0;
                 videoDetails.forEach(function (video) {
                   if (video.id === item.video) {
                     var duration = Math.round(
                     _moment2.default.duration(video.duration).asMinutes());
 
-                    tempItems.push(_extends({},
-                    item, {
-                      duration: duration }));
-
+                    tempItems = _extends({}, item, { duration: duration });
                   }
                 });
                 return _extends({}, tempItems);
               });
-              console.log(newItems[0]);
-
+              console.log(newItems);
               db.collection(Language).add({
                 id: id,
                 title: title,

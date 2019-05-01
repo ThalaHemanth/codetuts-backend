@@ -1,5 +1,5 @@
 type Query {
-  getCourses(language: String!): String!
+  getCourses(language: String!): ApiModel!
 }
 
 type Item {
@@ -14,7 +14,7 @@ type ApiModel {
   id: ID!
   title: String!
   language: String!
-  playlist: [Item]!
+  playlist: [Item!]!
 }
 
 type Mutation {

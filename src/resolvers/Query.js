@@ -10,14 +10,16 @@ const Query = {
             results.push({ ...doc.data() });
           });
         });
-      const newResults = results.map(result => {
-        const newPlaylist = [];
-        console.log(result.playlist[0]);
-      });
-      return 'success';
     } catch (error) {
       throw new Error('Error', error);
     }
+    return results.map(result => ({
+      id: result.id,
+      title: result.title,
+      playlistId: result.playlistId,
+      language,
+      playlist: result.playlist,
+    }));
   },
 };
 export { Query as default };
