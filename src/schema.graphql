@@ -1,5 +1,5 @@
 type Query {
-  getCourses(language: String!): ApiModel!
+  getCourses(language: String!): [ApiModel]!
 }
 
 type Item {
