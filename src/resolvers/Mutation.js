@@ -25,6 +25,7 @@ const Mutation = {
     const { playlistId } = args;
     const id = uuid();
     let Items = [];
+    let topics = [];
     const { data } = await axios.get(
       `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&key=AIzaSyCxqkIJes14pl7_8hSkgq_cApTDRgK12OI&maxResults=50`
     );
@@ -59,19 +60,35 @@ const Mutation = {
       return { ...tempItems };
     });
     console.log(newItems);
-    db.collection(Language).add({
+    await db.collection(Language).add({
       id,
       title,
       playlistId,
       playlist: newItems,
     });
+    await db
+      .collection('topics')
+      .doc('languages')
+      .get()
+      .then(doc => {
+        topics.push(Language);
+        topics.push(...doc.data().language);
+        topics = [...new Set(topics)];
+      });
+    await db
+      .collection('topics')
+      .doc('languages')
+      .set({ language: topics })
+      .then(doc => null);
 
-    return {
-      id,
-      title,
-      language: Language,
-      playlist: newItems,
-    };
+    return [
+      {
+        id,
+        title,
+        language: Language,
+        playlist: newItems,
+      },
+    ];
   },
 };
 

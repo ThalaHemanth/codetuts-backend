@@ -1,6 +1,7 @@
 const Query = {
   getCourses: async (parent, { language }, { db }) => {
     const results = [];
+
     try {
       await db
         .collection(language)
@@ -10,7 +11,6 @@ const Query = {
             results.push({ ...doc.data() });
           });
         });
-      console.log(results);
     } catch (error) {
       throw new Error('Error', error);
     }

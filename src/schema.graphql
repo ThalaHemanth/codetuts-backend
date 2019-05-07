@@ -20,5 +20,9 @@ type ApiModel {
 type Mutation {
   Signup(email: String!, password: String!): String
   Signin(email: String!, password: String!): String
-  CreateApi(title: String!, playlistId: String!, Language: String!): ApiModel
+  CreateApi(
+    title: String!
+    playlistId: String!
+    Language: String!
+  ): [ApiModel!]!
 }

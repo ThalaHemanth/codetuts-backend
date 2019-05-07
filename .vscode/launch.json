@@ -7,15 +7,9 @@
     {
       "type": "node",
       "request": "attach",
-      "name": "Attach to Process"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Launch Program",
-      "program": "${workspaceFolder}\\src/index.js",
-      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/babel-node",
-      "runtimeArgs": ["--nolazy"]
+      "name": "Docker: Attach to Node",
+      "remoteRoot": "/usr/src/app",
+      "port": 9229
     }
   ]
 }
