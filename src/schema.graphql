@@ -14,6 +14,7 @@ type ApiModel {
   id: ID!
   title: String!
   language: String!
+  cover: String!
   playlist: [Item!]!
 }
 
