@@ -14,7 +14,6 @@ const Query = {
     } catch (error) {
       throw new Error('Error', error);
     }
-    console.log(results);
     return results;
   },
 };

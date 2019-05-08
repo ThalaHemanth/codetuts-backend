@@ -68,6 +68,7 @@ const Mutation = {
         title,
         playlistId,
         cover,
+        language: Language,
         playlist: newItems,
       });
       await db
