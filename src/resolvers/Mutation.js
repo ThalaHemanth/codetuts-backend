@@ -31,10 +31,10 @@ const Mutation = {
       const { data } = await axios.get(
         `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&key=AIzaSyCxqkIJes14pl7_8hSkgq_cApTDRgK12OI&maxResults=50`
       );
-      cover = data.items[0].snippet.thumbnails.standard.url;
+      cover = data.items[0].snippet.thumbnails.high.url;
       Items = data.items.map(item => ({
         channel: item.snippet.channelTitle,
-        thumbnail: item.snippet.thumbnails.standard.url,
+        thumbnail: item.snippet.thumbnails.high.url,
         title: item.snippet.title,
         video: item.snippet.resourceId.videoId,
       }));
