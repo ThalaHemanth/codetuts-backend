@@ -1,7 +1,7 @@
 const Query = {
   getCourses: async (parent, { language }, { db }) => {
     const results = [];
-
+    language.toLowerCase();
     try {
       await db
         .collection(language)
